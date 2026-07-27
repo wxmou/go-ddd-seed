@@ -1,0 +1,38 @@
+# Air 热重载配置
+root = "."
+tmp_dir = "tmp"
+
+[build]
+  bin = "tmp/api.exe"
+  cmd = "go build -o tmp/api.exe ./cmd/api"
+  delay = 1000
+  exclude_dir = ["assets", "tmp", "vendor", "frontend/node_modules"]
+  exclude_file = []
+  exclude_regex = [".*_test.go"]
+  exclude_unchanged = false
+  follow_symlink = false
+  full_bin = ""
+  include_dir = []
+  include_ext = ["go", "yaml", "yml", "toml", "json"]
+  kill_delay = "0s"
+  log = "build-errors.log"
+  send_interrupt = false
+  stop_on_error = true
+
+[color]
+  app = ""
+  build = "yellow"
+  main = "green"
+  runner = "cyan"
+  watcher = "blue"
+
+[log]
+  main_only = false
+  time = false
+
+[misc]
+  clean_on_exit = true
+
+[screen]
+  clear_on_rebuild = false
+  keep_scroll = true

@@ -1,0 +1,29 @@
+# 环境文件
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+*~
+
+# Go
+bin/
+coverage.out
+coverage.html
+tmp/
+*.exe
+
+# Docker
+docker-data/
+
+# 日志
+*.log
+
+# 缓存
+.cache/
+.vite/

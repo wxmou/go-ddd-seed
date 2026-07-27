@@ -1,0 +1,4 @@
+# 仓储实现（Repository Implementation）
+# 在基础设施层实现 domain/adapter/repo/ 中定义的接口
+# 基于 GORM + PostgreSQL/MariaDB 实现持久化
+# 返回完整聚合，按聚合根ID操作

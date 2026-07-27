@@ -1,0 +1,52 @@
+server:
+  port: 8080
+  mode: debug # debug, release, test
+
+database:
+  driver: postgres # postgres / mysql
+  host: 10.8.0.1
+  port: 15432
+  user: app
+  password: app123
+  dbname: app
+  sslmode: disable
+
+redis:
+  host: 10.8.0.1
+  port: 6379
+  password: ""
+  db: 3
+
+jwt:
+  secret: app-secret-key-change-in-production
+  expiration: 24 # Access Token 过期时间（小时）
+  refreshExpiration: 168 # Refresh Token 过期时间（小时，7天）
+  defaultRole: "user" # 注册默认角色
+
+log:
+  level: debug
+  format: text # json, text
+  slowThreshold: 500 # 慢请求阈值（毫秒），超过后记录 Warn
+
+storage:
+  # 存储渠道：local / s3（MinIO 也使用 s3，兼容 S3 协议）
+  driver: local
+
+  # 本地存储配置（driver: local 时生效）
+  local:
+    path: ./data/files
+    baseURL: http://localhost:8080/files
+
+  # S3 兼容存储配置（driver: s3 时生效，MinIO 复用此配置）
+  s3:
+    endpoint: localhost:9000
+    accessKey: app
+    secretKey: app123
+    bucket: app-files
+    useSSL: false
+
+scheduler:
+  enabled: true
+  audit_cleanup_cron: "0 0 3 * * *"   # 每天凌晨 3 点
+  audit_retention_days: 180
+  job_timeout: 3600                    # 1 小时

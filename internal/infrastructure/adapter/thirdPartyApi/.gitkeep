@@ -1,0 +1,4 @@
+# 外部服务调用实现（Third-party API Implementation）
+# 在基础设施层实现 domain/adapter/thirdPartyApi/ 中定义的接口
+# 转换外部系统的数据结构为领域内的通用语言
+# 如短信服务、文件存储（MinIO）、第三方数据查询等

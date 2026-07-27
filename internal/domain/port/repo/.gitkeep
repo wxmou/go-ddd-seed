@@ -1,0 +1,3 @@
+# 仓储接口（Repository Interface — 端口定义）
+# 定义数据持久化操作的抽象接口，属于领域层的出站端口
+# 如 CaseRepository、ClientRepository 等，按聚合根粒度定义

@@ -1,0 +1,1551 @@
+basePath: /api/v1
+definitions:
+  docs.APIError:
+    properties:
+      code:
+        example: 2
+        type: integer
+      message:
+        example: 请求参数错误
+        type: string
+    type: object
+  github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.AssignPermissionReq:
+    properties:
+      permission_ids:
+        items:
+          type: string
+        minItems: 1
+        type: array
+    required:
+    - permission_ids
+    type: object
+  github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.AssignRoleReq:
+    properties:
+      role_id:
+        type: string
+    required:
+    - role_id
+    type: object
+  github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.CreatePermissionReq:
+    properties:
+      code:
+        maxLength: 200
+        minLength: 1
+        type: string
+      description:
+        maxLength: 500
+        type: string
+      name:
+        maxLength: 200
+        minLength: 1
+        type: string
+    required:
+    - code
+    - name
+    type: object
+  github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.CreateRoleReq:
+    properties:
+      code:
+        maxLength: 100
+        minLength: 1
+        type: string
+      description:
+        maxLength: 500
+        type: string
+      name:
+        maxLength: 100
+        minLength: 1
+        type: string
+    required:
+    - code
+    - name
+    type: object
+  github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.DictEntryAddReq:
+    properties:
+      label:
+        maxLength: 200
+        minLength: 1
+        type: string
+      sort_order:
+        minimum: 0
+        type: integer
+      type_id:
+        type: string
+      value:
+        maxLength: 200
+        minLength: 1
+        type: string
+    required:
+    - label
+    - type_id
+    - value
+    type: object
+  github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.DictEntryUpdateReq:
+    properties:
+      label:
+        maxLength: 200
+        minLength: 1
+        type: string
+      sort_order:
+        minimum: 0
+        type: integer
+      value:
+        maxLength: 200
+        minLength: 1
+        type: string
+    required:
+    - label
+    - value
+    type: object
+  github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.DictTypeCreateReq:
+    properties:
+      code:
+        maxLength: 100
+        minLength: 1
+        type: string
+      description:
+        maxLength: 500
+        type: string
+      name:
+        maxLength: 200
+        minLength: 1
+        type: string
+    required:
+    - code
+    - name
+    type: object
+  github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.DictTypeUpdateReq:
+    properties:
+      description:
+        maxLength: 500
+        type: string
+      name:
+        maxLength: 200
+        minLength: 1
+        type: string
+    required:
+    - name
+    type: object
+  github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.KvConfigCreateReq:
+    properties:
+      description:
+        maxLength: 500
+        type: string
+      key:
+        maxLength: 255
+        minLength: 1
+        type: string
+      value:
+        type: string
+    required:
+    - key
+    - value
+    type: object
+  github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.KvConfigUpdateReq:
+    properties:
+      description:
+        maxLength: 500
+        type: string
+      value:
+        type: string
+    required:
+    - value
+    type: object
+  github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.LoginReq:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.RefreshTokenReq:
+    properties:
+      refresh_token:
+        type: string
+    required:
+    - refresh_token
+    type: object
+  github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.RegisterReq:
+    properties:
+      password:
+        maxLength: 128
+        minLength: 6
+        type: string
+      real_name:
+        maxLength: 100
+        type: string
+      username:
+        maxLength: 100
+        minLength: 2
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.UpdatePermissionReq:
+    properties:
+      description:
+        maxLength: 500
+        type: string
+      name:
+        maxLength: 200
+        minLength: 1
+        type: string
+    required:
+    - name
+    type: object
+  github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.UpdateRoleReq:
+    properties:
+      description:
+        maxLength: 500
+        type: string
+      name:
+        maxLength: 100
+        minLength: 1
+        type: string
+    required:
+    - name
+    type: object
+  github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.DictEntryResp:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: string
+      label:
+        type: string
+      sort_order:
+        type: integer
+      status:
+        type: integer
+      type_id:
+        type: string
+      updated_at:
+        type: string
+      value:
+        type: string
+    type: object
+  github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.DictTypeResp:
+    properties:
+      code:
+        type: string
+      created_at:
+        type: string
+      description:
+        type: string
+      entries:
+        items:
+          $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.DictEntryResp'
+        type: array
+      id:
+        type: string
+      name:
+        type: string
+      status:
+        type: integer
+      updated_at:
+        type: string
+    type: object
+  github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.KvConfigResp:
+    properties:
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: string
+      key:
+        type: string
+      status:
+        type: integer
+      updated_at:
+        type: string
+      value:
+        type: string
+    type: object
+  github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.LoginResp:
+    properties:
+      access_token:
+        type: string
+      expires_in:
+        type: integer
+      refresh_token:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.UserInfo'
+    type: object
+  github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.PaginatedResp:
+    properties:
+      list: {}
+      page:
+        type: integer
+      size:
+        type: integer
+      total:
+        type: integer
+    type: object
+  github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.PermissionResp:
+    properties:
+      code:
+        type: string
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.RoleResp:
+    properties:
+      code:
+        type: string
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      status:
+        type: integer
+      updated_at:
+        type: string
+    type: object
+  github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.TokenResp:
+    properties:
+      access_token:
+        type: string
+      expires_in:
+        type: integer
+    type: object
+  github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.UserInfo:
+    properties:
+      id:
+        type: string
+      permissions:
+        items:
+          type: string
+        type: array
+      real_name:
+        type: string
+      roles:
+        items:
+          type: string
+        type: array
+      username:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: team@example.com
+    name: API Support
+    url: http://github.com/go-ddd-seed/go-ddd-seed/support
+  description: 系统后端 API
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Go DDD Seed API
+  version: "1.0"
+paths:
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: 使用用户名和密码登录，返回 JWT 访问令牌和刷新令牌
+      parameters:
+      - description: 登录请求参数
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.LoginReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 登录成功
+          schema:
+            $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.LoginResp'
+        "400":
+          description: 请求参数错误
+          schema:
+            $ref: '#/definitions/docs.APIError'
+        "401":
+          description: 用户名或密码错误
+          schema:
+            $ref: '#/definitions/docs.APIError'
+      summary: 用户登录
+      tags:
+      - 认证管理
+  /auth/logout:
+    post:
+      consumes:
+      - application/json
+      description: 撤销当前访问令牌，退出登录状态
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 登出成功
+          schema:
+            $ref: '#/definitions/docs.APIError'
+      security:
+      - ApiKeyAuth: []
+      summary: 退出登录
+      tags:
+      - 认证管理
+  /auth/me:
+    get:
+      description: 获取已登录用户的详细信息，包括角色和权限
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 当前用户信息
+          schema:
+            $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.UserInfo'
+        "401":
+          description: 未授权
+          schema:
+            $ref: '#/definitions/docs.APIError'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取当前用户信息
+      tags:
+      - 认证管理
+  /auth/refresh:
+    post:
+      consumes:
+      - application/json
+      description: 使用刷新令牌获取新的访问令牌
+      parameters:
+      - description: 刷新令牌请求参数
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.RefreshTokenReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 刷新成功，返回新的访问令牌
+          schema:
+            $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.TokenResp'
+        "400":
+          description: 请求参数错误
+          schema:
+            $ref: '#/definitions/docs.APIError'
+        "401":
+          description: 刷新令牌无效或已过期
+          schema:
+            $ref: '#/definitions/docs.APIError'
+      summary: 刷新访问令牌
+      tags:
+      - 认证管理
+  /auth/register:
+    post:
+      consumes:
+      - application/json
+      description: 创建新的用户账号
+      parameters:
+      - description: 注册请求参数
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.RegisterReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 注册成功，返回用户信息
+          schema:
+            $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.UserInfo'
+        "400":
+          description: 请求参数错误
+          schema:
+            $ref: '#/definitions/docs.APIError'
+        "409":
+          description: 用户名已存在
+          schema:
+            $ref: '#/definitions/docs.APIError'
+      summary: 用户注册
+      tags:
+      - 认证管理
+  /health:
+    get:
+      description: 检查服务是否正常运行
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 服务正常
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: 健康检查
+      tags:
+      - 系统管理
+  /infra/dict-entries:
+    get:
+      description: 根据字典类型ID获取所有字典条目
+      parameters:
+      - description: 字典类型ID
+        in: query
+        name: type_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 字典条目列表
+          schema:
+            items:
+              $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.DictEntryResp'
+            type: array
+        "400":
+          description: 请求参数错误
+          schema:
+            $ref: '#/definitions/docs.APIError'
+      security:
+      - ApiKeyAuth: []
+      summary: 查询字典条目列表
+      tags:
+      - 基础设施-字典管理
+    post:
+      consumes:
+      - application/json
+      description: 向指定字典类型添加新的字典条目
+      parameters:
+      - description: 添加字典条目请求参数
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.DictEntryAddReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 添加成功，返回包含条目的字典类型
+          schema:
+            $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.DictTypeResp'
+        "400":
+          description: 请求参数错误
+          schema:
+            $ref: '#/definitions/docs.APIError'
+        "404":
+          description: 字典类型不存在
+          schema:
+            $ref: '#/definitions/docs.APIError'
+      security:
+      - ApiKeyAuth: []
+      summary: 添加字典条目
+      tags:
+      - 基础设施-字典管理
+  /infra/dict-entries/{id}:
+    delete:
+      description: 删除指定的字典条目
+      parameters:
+      - description: 字典条目ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 删除成功，返回更新后的字典类型
+          schema:
+            $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.DictTypeResp'
+        "404":
+          description: 字典条目不存在
+          schema:
+            $ref: '#/definitions/docs.APIError'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除字典条目
+      tags:
+      - 基础设施-字典管理
+    get:
+      description: 根据ID获取字典条目详情
+      parameters:
+      - description: 字典条目ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 字典条目详情
+          schema:
+            $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.DictEntryResp'
+        "404":
+          description: 字典条目不存在
+          schema:
+            $ref: '#/definitions/docs.APIError'
+      security:
+      - ApiKeyAuth: []
+      summary: 按ID查询字典条目
+      tags:
+      - 基础设施-字典管理
+    put:
+      consumes:
+      - application/json
+      description: 更新指定字典条目的标签、值和排序
+      parameters:
+      - description: 字典条目ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: 更新字典条目请求参数
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.DictEntryUpdateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 更新成功，返回包含条目的字典类型
+          schema:
+            $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.DictTypeResp'
+        "400":
+          description: 请求参数错误
+          schema:
+            $ref: '#/definitions/docs.APIError'
+        "404":
+          description: 字典条目不存在
+          schema:
+            $ref: '#/definitions/docs.APIError'
+      security:
+      - ApiKeyAuth: []
+      summary: 更新字典条目
+      tags:
+      - 基础设施-字典管理
+  /infra/dict-entries/{id}/disable:
+    put:
+      description: 禁用指定的字典条目
+      parameters:
+      - description: 字典条目ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 禁用成功
+          schema:
+            $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.DictTypeResp'
+        "404":
+          description: 字典条目不存在
+          schema:
+            $ref: '#/definitions/docs.APIError'
+      security:
+      - ApiKeyAuth: []
+      summary: 禁用字典条目
+      tags:
+      - 基础设施-字典管理
+  /infra/dict-entries/{id}/enable:
+    put:
+      description: 启用指定的字典条目
+      parameters:
+      - description: 字典条目ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 启用成功
+          schema:
+            $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.DictTypeResp'
+        "404":
+          description: 字典条目不存在
+          schema:
+            $ref: '#/definitions/docs.APIError'
+      security:
+      - ApiKeyAuth: []
+      summary: 启用字典条目
+      tags:
+      - 基础设施-字典管理
+  /infra/dict-types:
+    get:
+      description: 分页查询字典类型列表，支持按状态过滤
+      parameters:
+      - description: 页码，默认1
+        in: query
+        minimum: 1
+        name: page
+        type: integer
+      - description: 每页数量，默认20
+        in: query
+        maximum: 100
+        name: page_size
+        type: integer
+      - description: 状态过滤：-1=全部 0=禁用 1=启用
+        in: query
+        name: status
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 字典类型列表
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.PaginatedResp'
+            - properties:
+                list:
+                  items:
+                    $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.DictTypeResp'
+                  type: array
+              type: object
+        "400":
+          description: 请求参数错误
+          schema:
+            $ref: '#/definitions/docs.APIError'
+      security:
+      - ApiKeyAuth: []
+      summary: 字典类型列表
+      tags:
+      - 基础设施-字典管理
+    post:
+      consumes:
+      - application/json
+      description: 创建新的字典类型定义
+      parameters:
+      - description: 创建字典类型请求参数
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.DictTypeCreateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 创建成功
+          schema:
+            $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.DictTypeResp'
+        "400":
+          description: 请求参数错误
+          schema:
+            $ref: '#/definitions/docs.APIError'
+      security:
+      - ApiKeyAuth: []
+      summary: 创建字典类型
+      tags:
+      - 基础设施-字典管理
+  /infra/dict-types/{id}:
+    delete:
+      description: 删除指定的字典类型
+      parameters:
+      - description: 字典类型ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 删除成功
+          schema:
+            $ref: '#/definitions/docs.APIError'
+        "404":
+          description: 字典类型不存在
+          schema:
+            $ref: '#/definitions/docs.APIError'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除字典类型
+      tags:
+      - 基础设施-字典管理
+    get:
+      description: 根据ID获取字典类型详情
+      parameters:
+      - description: 字典类型ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 字典类型详情
+          schema:
+            $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.DictTypeResp'
+        "404":
+          description: 字典类型不存在
+          schema:
+            $ref: '#/definitions/docs.APIError'
+      security:
+      - ApiKeyAuth: []
+      summary: 按ID查询字典类型
+      tags:
+      - 基础设施-字典管理
+    put:
+      consumes:
+      - application/json
+      description: 更新指定字典类型的名称和描述
+      parameters:
+      - description: 字典类型ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: 更新字典类型请求参数
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.DictTypeUpdateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 更新成功
+          schema:
+            $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.DictTypeResp'
+        "400":
+          description: 请求参数错误
+          schema:
+            $ref: '#/definitions/docs.APIError'
+        "404":
+          description: 字典类型不存在
+          schema:
+            $ref: '#/definitions/docs.APIError'
+      security:
+      - ApiKeyAuth: []
+      summary: 更新字典类型
+      tags:
+      - 基础设施-字典管理
+  /infra/dict-types/{id}/disable:
+    put:
+      description: 禁用指定的字典类型
+      parameters:
+      - description: 字典类型ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 禁用成功
+          schema:
+            $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.DictTypeResp'
+        "404":
+          description: 字典类型不存在
+          schema:
+            $ref: '#/definitions/docs.APIError'
+      security:
+      - ApiKeyAuth: []
+      summary: 禁用字典类型
+      tags:
+      - 基础设施-字典管理
+  /infra/dict-types/{id}/enable:
+    put:
+      description: 启用指定的字典类型
+      parameters:
+      - description: 字典类型ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 启用成功
+          schema:
+            $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.DictTypeResp'
+        "404":
+          description: 字典类型不存在
+          schema:
+            $ref: '#/definitions/docs.APIError'
+      security:
+      - ApiKeyAuth: []
+      summary: 启用字典类型
+      tags:
+      - 基础设施-字典管理
+  /infra/dict-types/code/{code}:
+    get:
+      description: 根据编码获取字典类型详情
+      parameters:
+      - description: 字典类型编码
+        in: path
+        name: code
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 字典类型详情
+          schema:
+            $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.DictTypeResp'
+        "404":
+          description: 字典类型不存在
+          schema:
+            $ref: '#/definitions/docs.APIError'
+      security:
+      - ApiKeyAuth: []
+      summary: 按编码查询字典类型
+      tags:
+      - 基础设施-字典管理
+  /infra/dicts/entries/{code}:
+    get:
+      description: 根据字典类型编码获取已启用的字典条目列表（前端枚举值获取，优先使用缓存）
+      parameters:
+      - description: 字典类型编码
+        in: path
+        name: code
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 已启用的字典条目列表
+          schema:
+            items:
+              $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.DictEntryResp'
+            type: array
+        "404":
+          description: 字典类型不存在或无可用条目
+          schema:
+            $ref: '#/definitions/docs.APIError'
+      security:
+      - ApiKeyAuth: []
+      summary: 按编码获取可用条目
+      tags:
+      - 基础设施-字典管理
+  /infra/kv-configs:
+    get:
+      description: 分页查询键值配置列表，支持按状态过滤
+      parameters:
+      - description: 页码，默认1
+        in: query
+        minimum: 1
+        name: page
+        type: integer
+      - description: 每页数量，默认20
+        in: query
+        maximum: 100
+        name: page_size
+        type: integer
+      - description: 状态过滤：-1=全部 0=禁用 1=启用
+        in: query
+        name: status
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 配置列表
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.PaginatedResp'
+            - properties:
+                list:
+                  items:
+                    $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.KvConfigResp'
+                  type: array
+              type: object
+        "400":
+          description: 请求参数错误
+          schema:
+            $ref: '#/definitions/docs.APIError'
+      security:
+      - ApiKeyAuth: []
+      summary: 键值配置列表
+      tags:
+      - 基础设施-配置管理
+    post:
+      consumes:
+      - application/json
+      description: 创建一条新的键值配置记录
+      parameters:
+      - description: 创建配置请求参数
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.KvConfigCreateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 创建成功
+          schema:
+            $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.KvConfigResp'
+        "400":
+          description: 请求参数错误
+          schema:
+            $ref: '#/definitions/docs.APIError'
+      security:
+      - ApiKeyAuth: []
+      summary: 创建键值配置
+      tags:
+      - 基础设施-配置管理
+  /infra/kv-configs/{id}:
+    delete:
+      description: 删除指定键值配置
+      parameters:
+      - description: 配置ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 删除成功
+          schema:
+            $ref: '#/definitions/docs.APIError'
+        "404":
+          description: 配置不存在
+          schema:
+            $ref: '#/definitions/docs.APIError'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除键值配置
+      tags:
+      - 基础设施-配置管理
+    get:
+      description: 根据ID获取键值配置详情
+      parameters:
+      - description: 配置ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 配置详情
+          schema:
+            $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.KvConfigResp'
+        "404":
+          description: 配置不存在
+          schema:
+            $ref: '#/definitions/docs.APIError'
+      security:
+      - ApiKeyAuth: []
+      summary: 按ID查询配置
+      tags:
+      - 基础设施-配置管理
+    put:
+      consumes:
+      - application/json
+      description: 更新指定键值配置的值和描述
+      parameters:
+      - description: 配置ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: 更新配置请求参数
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.KvConfigUpdateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 更新成功
+          schema:
+            $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.KvConfigResp'
+        "400":
+          description: 请求参数错误
+          schema:
+            $ref: '#/definitions/docs.APIError'
+        "404":
+          description: 配置不存在
+          schema:
+            $ref: '#/definitions/docs.APIError'
+      security:
+      - ApiKeyAuth: []
+      summary: 更新键值配置
+      tags:
+      - 基础设施-配置管理
+  /infra/kv-configs/key/{key}:
+    get:
+      description: 根据配置键名获取键值配置详情
+      parameters:
+      - description: 配置键名
+        in: path
+        name: key
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 配置详情
+          schema:
+            $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.KvConfigResp'
+        "404":
+          description: 配置不存在
+          schema:
+            $ref: '#/definitions/docs.APIError'
+      security:
+      - ApiKeyAuth: []
+      summary: 按Key查询配置
+      tags:
+      - 基础设施-配置管理
+  /permissions:
+    get:
+      description: 查询所有权限列表
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 权限列表
+          schema:
+            items:
+              $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.PermissionResp'
+            type: array
+      security:
+      - ApiKeyAuth: []
+      summary: 权限列表
+      tags:
+      - 权限管理-权限
+    post:
+      consumes:
+      - application/json
+      description: 创建新的权限定义
+      parameters:
+      - description: 创建权限请求参数
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.CreatePermissionReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 创建成功
+          schema:
+            $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.PermissionResp'
+        "400":
+          description: 请求参数错误
+          schema:
+            $ref: '#/definitions/docs.APIError'
+      security:
+      - ApiKeyAuth: []
+      summary: 创建权限
+      tags:
+      - 权限管理-权限
+  /permissions/{id}:
+    delete:
+      description: 删除指定的权限
+      parameters:
+      - description: 权限ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 删除成功
+          schema:
+            $ref: '#/definitions/docs.APIError'
+        "404":
+          description: 权限不存在
+          schema:
+            $ref: '#/definitions/docs.APIError'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除权限
+      tags:
+      - 权限管理-权限
+    put:
+      consumes:
+      - application/json
+      description: 更新指定权限的名称和描述
+      parameters:
+      - description: 权限ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: 更新权限请求参数
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.UpdatePermissionReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 更新成功
+          schema:
+            $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.PermissionResp'
+        "400":
+          description: 请求参数错误
+          schema:
+            $ref: '#/definitions/docs.APIError'
+        "404":
+          description: 权限不存在
+          schema:
+            $ref: '#/definitions/docs.APIError'
+      security:
+      - ApiKeyAuth: []
+      summary: 更新权限
+      tags:
+      - 权限管理-权限
+  /roles:
+    get:
+      description: 查询所有角色列表
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 角色列表
+          schema:
+            items:
+              $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.RoleResp'
+            type: array
+      security:
+      - ApiKeyAuth: []
+      summary: 角色列表
+      tags:
+      - 权限管理-角色
+    post:
+      consumes:
+      - application/json
+      description: 创建新的角色定义
+      parameters:
+      - description: 创建角色请求参数
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.CreateRoleReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 创建成功
+          schema:
+            $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.RoleResp'
+        "400":
+          description: 请求参数错误
+          schema:
+            $ref: '#/definitions/docs.APIError'
+      security:
+      - ApiKeyAuth: []
+      summary: 创建角色
+      tags:
+      - 权限管理-角色
+  /roles/{id}:
+    delete:
+      description: 删除指定的角色
+      parameters:
+      - description: 角色ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 删除成功
+          schema:
+            $ref: '#/definitions/docs.APIError'
+        "404":
+          description: 角色不存在
+          schema:
+            $ref: '#/definitions/docs.APIError'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除角色
+      tags:
+      - 权限管理-角色
+    get:
+      description: 根据ID获取角色详情
+      parameters:
+      - description: 角色ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 角色详情
+          schema:
+            $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.RoleResp'
+        "404":
+          description: 角色不存在
+          schema:
+            $ref: '#/definitions/docs.APIError'
+      security:
+      - ApiKeyAuth: []
+      summary: 按ID查询角色
+      tags:
+      - 权限管理-角色
+    put:
+      consumes:
+      - application/json
+      description: 更新指定角色的名称和描述
+      parameters:
+      - description: 角色ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: 更新角色请求参数
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.UpdateRoleReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 更新成功
+          schema:
+            $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.RoleResp'
+        "400":
+          description: 请求参数错误
+          schema:
+            $ref: '#/definitions/docs.APIError'
+        "404":
+          description: 角色不存在
+          schema:
+            $ref: '#/definitions/docs.APIError'
+      security:
+      - ApiKeyAuth: []
+      summary: 更新角色
+      tags:
+      - 权限管理-角色
+  /roles/{id}/disable:
+    put:
+      description: 禁用指定的角色
+      parameters:
+      - description: 角色ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 禁用成功
+          schema:
+            $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.RoleResp'
+        "404":
+          description: 角色不存在
+          schema:
+            $ref: '#/definitions/docs.APIError'
+      security:
+      - ApiKeyAuth: []
+      summary: 禁用角色
+      tags:
+      - 权限管理-角色
+  /roles/{id}/enable:
+    put:
+      description: 启用指定的角色
+      parameters:
+      - description: 角色ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 启用成功
+          schema:
+            $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.RoleResp'
+        "404":
+          description: 角色不存在
+          schema:
+            $ref: '#/definitions/docs.APIError'
+      security:
+      - ApiKeyAuth: []
+      summary: 启用角色
+      tags:
+      - 权限管理-角色
+  /roles/{id}/permissions:
+    post:
+      consumes:
+      - application/json
+      description: 为指定角色批量分配权限
+      parameters:
+      - description: 角色ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: 分配权限请求参数
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.AssignPermissionReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 分配成功
+          schema:
+            $ref: '#/definitions/docs.APIError'
+        "400":
+          description: 请求参数错误
+          schema:
+            $ref: '#/definitions/docs.APIError'
+        "404":
+          description: 角色或权限不存在
+          schema:
+            $ref: '#/definitions/docs.APIError'
+      security:
+      - ApiKeyAuth: []
+      summary: 为角色分配权限
+      tags:
+      - 权限管理-角色
+  /roles/{id}/permissions/{permId}:
+    delete:
+      description: 从指定角色中移除特定权限
+      parameters:
+      - description: 角色ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: 权限ID
+        in: path
+        name: permId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 移除成功
+          schema:
+            $ref: '#/definitions/docs.APIError'
+        "404":
+          description: 角色或权限不存在
+          schema:
+            $ref: '#/definitions/docs.APIError'
+      security:
+      - ApiKeyAuth: []
+      summary: 移除角色权限
+      tags:
+      - 权限管理-角色
+  /users/{id}/roles:
+    post:
+      consumes:
+      - application/json
+      description: 为指定用户分配角色
+      parameters:
+      - description: 用户ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: 分配角色请求参数
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.AssignRoleReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 分配成功
+          schema:
+            $ref: '#/definitions/docs.APIError'
+        "400":
+          description: 请求参数错误
+          schema:
+            $ref: '#/definitions/docs.APIError'
+        "404":
+          description: 用户或角色不存在
+          schema:
+            $ref: '#/definitions/docs.APIError'
+      security:
+      - ApiKeyAuth: []
+      summary: 为用户分配角色
+      tags:
+      - 权限管理-用户角色
+  /users/{id}/roles/{roleId}:
+    delete:
+      description: 从指定用户中移除特定角色
+      parameters:
+      - description: 用户ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: 角色ID
+        in: path
+        name: roleId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 移除成功
+          schema:
+            $ref: '#/definitions/docs.APIError'
+        "404":
+          description: 用户或角色不存在
+          schema:
+            $ref: '#/definitions/docs.APIError'
+      security:
+      - ApiKeyAuth: []
+      summary: 移除用户角色
+      tags:
+      - 权限管理-用户角色
+securityDefinitions:
+  ApiKeyAuth:
+    description: 'Bearer token authentication. Format: "Bearer <token>"'
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

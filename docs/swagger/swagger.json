@@ -1,0 +1,2412 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "系统后端 API",
+        "title": "Go DDD Seed API",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "API Support",
+            "url": "http://github.com/go-ddd-seed/go-ddd-seed/support",
+            "email": "team@example.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/api/v1",
+    "paths": {
+        "/auth/login": {
+            "post": {
+                "description": "使用用户名和密码登录，返回 JWT 访问令牌和刷新令牌",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "认证管理"
+                ],
+                "summary": "用户登录",
+                "parameters": [
+                    {
+                        "description": "登录请求参数",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.LoginReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "登录成功",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.LoginResp"
+                        }
+                    },
+                    "400": {
+                        "description": "请求参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    },
+                    "401": {
+                        "description": "用户名或密码错误",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/logout": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "撤销当前访问令牌，退出登录状态",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "认证管理"
+                ],
+                "summary": "退出登录",
+                "responses": {
+                    "200": {
+                        "description": "登出成功",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/me": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "获取已登录用户的详细信息，包括角色和权限",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "认证管理"
+                ],
+                "summary": "获取当前用户信息",
+                "responses": {
+                    "200": {
+                        "description": "当前用户信息",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.UserInfo"
+                        }
+                    },
+                    "401": {
+                        "description": "未授权",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/refresh": {
+            "post": {
+                "description": "使用刷新令牌获取新的访问令牌",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "认证管理"
+                ],
+                "summary": "刷新访问令牌",
+                "parameters": [
+                    {
+                        "description": "刷新令牌请求参数",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.RefreshTokenReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "刷新成功，返回新的访问令牌",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.TokenResp"
+                        }
+                    },
+                    "400": {
+                        "description": "请求参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    },
+                    "401": {
+                        "description": "刷新令牌无效或已过期",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/register": {
+            "post": {
+                "description": "创建新的用户账号",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "认证管理"
+                ],
+                "summary": "用户注册",
+                "parameters": [
+                    {
+                        "description": "注册请求参数",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.RegisterReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "注册成功，返回用户信息",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.UserInfo"
+                        }
+                    },
+                    "400": {
+                        "description": "请求参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    },
+                    "409": {
+                        "description": "用户名已存在",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/health": {
+            "get": {
+                "description": "检查服务是否正常运行",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统管理"
+                ],
+                "summary": "健康检查",
+                "responses": {
+                    "200": {
+                        "description": "服务正常",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/infra/dict-entries": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "根据字典类型ID获取所有字典条目",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "基础设施-字典管理"
+                ],
+                "summary": "查询字典条目列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "字典类型ID",
+                        "name": "type_id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "字典条目列表",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.DictEntryResp"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "请求参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "向指定字典类型添加新的字典条目",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "基础设施-字典管理"
+                ],
+                "summary": "添加字典条目",
+                "parameters": [
+                    {
+                        "description": "添加字典条目请求参数",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.DictEntryAddReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "添加成功，返回包含条目的字典类型",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.DictTypeResp"
+                        }
+                    },
+                    "400": {
+                        "description": "请求参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    },
+                    "404": {
+                        "description": "字典类型不存在",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/infra/dict-entries/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "根据ID获取字典条目详情",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "基础设施-字典管理"
+                ],
+                "summary": "按ID查询字典条目",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "字典条目ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "字典条目详情",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.DictEntryResp"
+                        }
+                    },
+                    "404": {
+                        "description": "字典条目不存在",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "更新指定字典条目的标签、值和排序",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "基础设施-字典管理"
+                ],
+                "summary": "更新字典条目",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "字典条目ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "更新字典条目请求参数",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.DictEntryUpdateReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "更新成功，返回包含条目的字典类型",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.DictTypeResp"
+                        }
+                    },
+                    "400": {
+                        "description": "请求参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    },
+                    "404": {
+                        "description": "字典条目不存在",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "删除指定的字典条目",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "基础设施-字典管理"
+                ],
+                "summary": "删除字典条目",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "字典条目ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "删除成功，返回更新后的字典类型",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.DictTypeResp"
+                        }
+                    },
+                    "404": {
+                        "description": "字典条目不存在",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/infra/dict-entries/{id}/disable": {
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "禁用指定的字典条目",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "基础设施-字典管理"
+                ],
+                "summary": "禁用字典条目",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "字典条目ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "禁用成功",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.DictTypeResp"
+                        }
+                    },
+                    "404": {
+                        "description": "字典条目不存在",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/infra/dict-entries/{id}/enable": {
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "启用指定的字典条目",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "基础设施-字典管理"
+                ],
+                "summary": "启用字典条目",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "字典条目ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "启用成功",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.DictTypeResp"
+                        }
+                    },
+                    "404": {
+                        "description": "字典条目不存在",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/infra/dict-types": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "分页查询字典类型列表，支持按状态过滤",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "基础设施-字典管理"
+                ],
+                "summary": "字典类型列表",
+                "parameters": [
+                    {
+                        "minimum": 1,
+                        "type": "integer",
+                        "description": "页码，默认1",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "maximum": 100,
+                        "type": "integer",
+                        "description": "每页数量，默认20",
+                        "name": "page_size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "状态过滤：-1=全部 0=禁用 1=启用",
+                        "name": "status",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "字典类型列表",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.PaginatedResp"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "list": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.DictTypeResp"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "请求参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "创建新的字典类型定义",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "基础设施-字典管理"
+                ],
+                "summary": "创建字典类型",
+                "parameters": [
+                    {
+                        "description": "创建字典类型请求参数",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.DictTypeCreateReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "创建成功",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.DictTypeResp"
+                        }
+                    },
+                    "400": {
+                        "description": "请求参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/infra/dict-types/code/{code}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "根据编码获取字典类型详情",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "基础设施-字典管理"
+                ],
+                "summary": "按编码查询字典类型",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "字典类型编码",
+                        "name": "code",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "字典类型详情",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.DictTypeResp"
+                        }
+                    },
+                    "404": {
+                        "description": "字典类型不存在",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/infra/dict-types/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "根据ID获取字典类型详情",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "基础设施-字典管理"
+                ],
+                "summary": "按ID查询字典类型",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "字典类型ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "字典类型详情",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.DictTypeResp"
+                        }
+                    },
+                    "404": {
+                        "description": "字典类型不存在",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "更新指定字典类型的名称和描述",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "基础设施-字典管理"
+                ],
+                "summary": "更新字典类型",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "字典类型ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "更新字典类型请求参数",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.DictTypeUpdateReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "更新成功",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.DictTypeResp"
+                        }
+                    },
+                    "400": {
+                        "description": "请求参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    },
+                    "404": {
+                        "description": "字典类型不存在",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "删除指定的字典类型",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "基础设施-字典管理"
+                ],
+                "summary": "删除字典类型",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "字典类型ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "删除成功",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    },
+                    "404": {
+                        "description": "字典类型不存在",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/infra/dict-types/{id}/disable": {
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "禁用指定的字典类型",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "基础设施-字典管理"
+                ],
+                "summary": "禁用字典类型",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "字典类型ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "禁用成功",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.DictTypeResp"
+                        }
+                    },
+                    "404": {
+                        "description": "字典类型不存在",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/infra/dict-types/{id}/enable": {
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "启用指定的字典类型",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "基础设施-字典管理"
+                ],
+                "summary": "启用字典类型",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "字典类型ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "启用成功",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.DictTypeResp"
+                        }
+                    },
+                    "404": {
+                        "description": "字典类型不存在",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/infra/dicts/entries/{code}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "根据字典类型编码获取已启用的字典条目列表（前端枚举值获取，优先使用缓存）",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "基础设施-字典管理"
+                ],
+                "summary": "按编码获取可用条目",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "字典类型编码",
+                        "name": "code",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "已启用的字典条目列表",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.DictEntryResp"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "字典类型不存在或无可用条目",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/infra/kv-configs": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "分页查询键值配置列表，支持按状态过滤",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "基础设施-配置管理"
+                ],
+                "summary": "键值配置列表",
+                "parameters": [
+                    {
+                        "minimum": 1,
+                        "type": "integer",
+                        "description": "页码，默认1",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "maximum": 100,
+                        "type": "integer",
+                        "description": "每页数量，默认20",
+                        "name": "page_size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "状态过滤：-1=全部 0=禁用 1=启用",
+                        "name": "status",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "配置列表",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.PaginatedResp"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "list": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.KvConfigResp"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "请求参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "创建一条新的键值配置记录",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "基础设施-配置管理"
+                ],
+                "summary": "创建键值配置",
+                "parameters": [
+                    {
+                        "description": "创建配置请求参数",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.KvConfigCreateReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "创建成功",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.KvConfigResp"
+                        }
+                    },
+                    "400": {
+                        "description": "请求参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/infra/kv-configs/key/{key}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "根据配置键名获取键值配置详情",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "基础设施-配置管理"
+                ],
+                "summary": "按Key查询配置",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "配置键名",
+                        "name": "key",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "配置详情",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.KvConfigResp"
+                        }
+                    },
+                    "404": {
+                        "description": "配置不存在",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/infra/kv-configs/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "根据ID获取键值配置详情",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "基础设施-配置管理"
+                ],
+                "summary": "按ID查询配置",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "配置ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "配置详情",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.KvConfigResp"
+                        }
+                    },
+                    "404": {
+                        "description": "配置不存在",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "更新指定键值配置的值和描述",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "基础设施-配置管理"
+                ],
+                "summary": "更新键值配置",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "配置ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "更新配置请求参数",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.KvConfigUpdateReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "更新成功",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.KvConfigResp"
+                        }
+                    },
+                    "400": {
+                        "description": "请求参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    },
+                    "404": {
+                        "description": "配置不存在",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "删除指定键值配置",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "基础设施-配置管理"
+                ],
+                "summary": "删除键值配置",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "配置ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "删除成功",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    },
+                    "404": {
+                        "description": "配置不存在",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/permissions": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "查询所有权限列表",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "权限管理-权限"
+                ],
+                "summary": "权限列表",
+                "responses": {
+                    "200": {
+                        "description": "权限列表",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.PermissionResp"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "创建新的权限定义",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "权限管理-权限"
+                ],
+                "summary": "创建权限",
+                "parameters": [
+                    {
+                        "description": "创建权限请求参数",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.CreatePermissionReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "创建成功",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.PermissionResp"
+                        }
+                    },
+                    "400": {
+                        "description": "请求参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/permissions/{id}": {
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "更新指定权限的名称和描述",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "权限管理-权限"
+                ],
+                "summary": "更新权限",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "权限ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "更新权限请求参数",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.UpdatePermissionReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "更新成功",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.PermissionResp"
+                        }
+                    },
+                    "400": {
+                        "description": "请求参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    },
+                    "404": {
+                        "description": "权限不存在",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "删除指定的权限",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "权限管理-权限"
+                ],
+                "summary": "删除权限",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "权限ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "删除成功",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    },
+                    "404": {
+                        "description": "权限不存在",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/roles": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "查询所有角色列表",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "权限管理-角色"
+                ],
+                "summary": "角色列表",
+                "responses": {
+                    "200": {
+                        "description": "角色列表",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.RoleResp"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "创建新的角色定义",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "权限管理-角色"
+                ],
+                "summary": "创建角色",
+                "parameters": [
+                    {
+                        "description": "创建角色请求参数",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.CreateRoleReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "创建成功",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.RoleResp"
+                        }
+                    },
+                    "400": {
+                        "description": "请求参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/roles/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "根据ID获取角色详情",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "权限管理-角色"
+                ],
+                "summary": "按ID查询角色",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "角色ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "角色详情",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.RoleResp"
+                        }
+                    },
+                    "404": {
+                        "description": "角色不存在",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "更新指定角色的名称和描述",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "权限管理-角色"
+                ],
+                "summary": "更新角色",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "角色ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "更新角色请求参数",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.UpdateRoleReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "更新成功",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.RoleResp"
+                        }
+                    },
+                    "400": {
+                        "description": "请求参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    },
+                    "404": {
+                        "description": "角色不存在",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "删除指定的角色",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "权限管理-角色"
+                ],
+                "summary": "删除角色",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "角色ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "删除成功",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    },
+                    "404": {
+                        "description": "角色不存在",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/roles/{id}/disable": {
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "禁用指定的角色",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "权限管理-角色"
+                ],
+                "summary": "禁用角色",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "角色ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "禁用成功",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.RoleResp"
+                        }
+                    },
+                    "404": {
+                        "description": "角色不存在",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/roles/{id}/enable": {
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "启用指定的角色",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "权限管理-角色"
+                ],
+                "summary": "启用角色",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "角色ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "启用成功",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.RoleResp"
+                        }
+                    },
+                    "404": {
+                        "description": "角色不存在",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/roles/{id}/permissions": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "为指定角色批量分配权限",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "权限管理-角色"
+                ],
+                "summary": "为角色分配权限",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "角色ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "分配权限请求参数",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.AssignPermissionReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "分配成功",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    },
+                    "400": {
+                        "description": "请求参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    },
+                    "404": {
+                        "description": "角色或权限不存在",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/roles/{id}/permissions/{permId}": {
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "从指定角色中移除特定权限",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "权限管理-角色"
+                ],
+                "summary": "移除角色权限",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "角色ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "权限ID",
+                        "name": "permId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "移除成功",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    },
+                    "404": {
+                        "description": "角色或权限不存在",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{id}/roles": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "为指定用户分配角色",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "权限管理-用户角色"
+                ],
+                "summary": "为用户分配角色",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "分配角色请求参数",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.AssignRoleReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "分配成功",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    },
+                    "400": {
+                        "description": "请求参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    },
+                    "404": {
+                        "description": "用户或角色不存在",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{id}/roles/{roleId}": {
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "从指定用户中移除特定角色",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "权限管理-用户角色"
+                ],
+                "summary": "移除用户角色",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "角色ID",
+                        "name": "roleId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "移除成功",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    },
+                    "404": {
+                        "description": "用户或角色不存在",
+                        "schema": {
+                            "$ref": "#/definitions/docs.APIError"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "docs.APIError": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "example": 2
+                },
+                "message": {
+                    "type": "string",
+                    "example": "请求参数错误"
+                }
+            }
+        },
+        "github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.AssignPermissionReq": {
+            "type": "object",
+            "required": [
+                "permission_ids"
+            ],
+            "properties": {
+                "permission_ids": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.AssignRoleReq": {
+            "type": "object",
+            "required": [
+                "role_id"
+            ],
+            "properties": {
+                "role_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.CreatePermissionReq": {
+            "type": "object",
+            "required": [
+                "code",
+                "name"
+            ],
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "maxLength": 200,
+                    "minLength": 1
+                },
+                "description": {
+                    "type": "string",
+                    "maxLength": 500
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 200,
+                    "minLength": 1
+                }
+            }
+        },
+        "github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.CreateRoleReq": {
+            "type": "object",
+            "required": [
+                "code",
+                "name"
+            ],
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "minLength": 1
+                },
+                "description": {
+                    "type": "string",
+                    "maxLength": 500
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "minLength": 1
+                }
+            }
+        },
+        "github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.DictEntryAddReq": {
+            "type": "object",
+            "required": [
+                "label",
+                "type_id",
+                "value"
+            ],
+            "properties": {
+                "label": {
+                    "type": "string",
+                    "maxLength": 200,
+                    "minLength": 1
+                },
+                "sort_order": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "type_id": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string",
+                    "maxLength": 200,
+                    "minLength": 1
+                }
+            }
+        },
+        "github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.DictEntryUpdateReq": {
+            "type": "object",
+            "required": [
+                "label",
+                "value"
+            ],
+            "properties": {
+                "label": {
+                    "type": "string",
+                    "maxLength": 200,
+                    "minLength": 1
+                },
+                "sort_order": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "value": {
+                    "type": "string",
+                    "maxLength": 200,
+                    "minLength": 1
+                }
+            }
+        },
+        "github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.DictTypeCreateReq": {
+            "type": "object",
+            "required": [
+                "code",
+                "name"
+            ],
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "minLength": 1
+                },
+                "description": {
+                    "type": "string",
+                    "maxLength": 500
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 200,
+                    "minLength": 1
+                }
+            }
+        },
+        "github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.DictTypeUpdateReq": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "maxLength": 500
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 200,
+                    "minLength": 1
+                }
+            }
+        },
+        "github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.KvConfigCreateReq": {
+            "type": "object",
+            "required": [
+                "key",
+                "value"
+            ],
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "maxLength": 500
+                },
+                "key": {
+                    "type": "string",
+                    "maxLength": 255,
+                    "minLength": 1
+                },
+                "value": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.KvConfigUpdateReq": {
+            "type": "object",
+            "required": [
+                "value"
+            ],
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "maxLength": 500
+                },
+                "value": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.LoginReq": {
+            "type": "object",
+            "required": [
+                "password",
+                "username"
+            ],
+            "properties": {
+                "password": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.RefreshTokenReq": {
+            "type": "object",
+            "required": [
+                "refresh_token"
+            ],
+            "properties": {
+                "refresh_token": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.RegisterReq": {
+            "type": "object",
+            "required": [
+                "password",
+                "username"
+            ],
+            "properties": {
+                "password": {
+                    "type": "string",
+                    "maxLength": 128,
+                    "minLength": 6
+                },
+                "real_name": {
+                    "type": "string",
+                    "maxLength": 100
+                },
+                "username": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "minLength": 2
+                }
+            }
+        },
+        "github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.UpdatePermissionReq": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "maxLength": 500
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 200,
+                    "minLength": 1
+                }
+            }
+        },
+        "github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_req.UpdateRoleReq": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "maxLength": 500
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "minLength": 1
+                }
+            }
+        },
+        "github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.DictEntryResp": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "label": {
+                    "type": "string"
+                },
+                "sort_order": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "integer"
+                },
+                "type_id": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.DictTypeResp": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "entries": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.DictEntryResp"
+                    }
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.KvConfigResp": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "key": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.LoginResp": {
+            "type": "object",
+            "properties": {
+                "access_token": {
+                    "type": "string"
+                },
+                "expires_in": {
+                    "type": "integer"
+                },
+                "refresh_token": {
+                    "type": "string"
+                },
+                "user": {
+                    "$ref": "#/definitions/github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.UserInfo"
+                }
+            }
+        },
+        "github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.PaginatedResp": {
+            "type": "object",
+            "properties": {
+                "list": {},
+                "page": {
+                    "type": "integer"
+                },
+                "size": {
+                    "type": "integer"
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.PermissionResp": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.RoleResp": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.TokenResp": {
+            "type": "object",
+            "properties": {
+                "access_token": {
+                    "type": "string"
+                },
+                "expires_in": {
+                    "type": "integer"
+                }
+            }
+        },
+        "github_com_go-ddd-seed_go-ddd-seed_internal_trigger_http_resp.UserInfo": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "permissions": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "real_name": {
+                    "type": "string"
+                },
+                "roles": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "ApiKeyAuth": {
+            "description": "Bearer token authentication. Format: \"Bearer \u003ctoken\u003e\"",
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
+}

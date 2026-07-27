@@ -1,0 +1,3 @@
+# HTTP 请求 DTO
+# 定义 HTTP 接口的请求数据结构，包含参数校验规则
+# 使用 go-playground/validator 做请求校验

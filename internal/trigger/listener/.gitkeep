@@ -1,0 +1,3 @@
+# 消息队列监听器（Message Queue Listener）
+# 领域事件的异步消费者，实现聚合间的最终一致性
+# 如 CaseSubmitted 事件触发 → 发送通知、更新统计等
